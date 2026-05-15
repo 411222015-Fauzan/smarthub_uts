@@ -1,0 +1,49 @@
+### Login Admin
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+  "email": "admin@smarthub.local",
+  "password": "password"
+}
+
+### Ambil Semua Inventaris
+GET http://localhost:8000/api/equipments
+Authorization: Bearer ISI_TOKEN_DI_SINI
+Accept: application/json
+
+### Buat Jadwal Peminjaman
+POST http://localhost:8000/api/schedules
+Authorization: Bearer ISI_TOKEN_DI_SINI
+Content-Type: application/json
+Accept: application/json
+
+{
+  "equipment_id": 1,
+  "room_id": 1,
+  "start_time": "2026-05-20 09:00:00",
+  "end_time": "2026-05-20 12:00:00",
+  "purpose": "Produksi konten video komunitas"
+}
+
+### Check-in
+POST http://localhost:8000/api/check-ins
+Authorization: Bearer ISI_TOKEN_DI_SINI
+Content-Type: application/json
+Accept: application/json
+
+{
+  "borrowing_schedule_id": 1,
+  "condition_before": "Kamera dalam kondisi baik dan baterai penuh"
+}
+
+### Check-out
+PUT http://localhost:8000/api/check-ins/1/checkout
+Authorization: Bearer ISI_TOKEN_DI_SINI
+Content-Type: application/json
+Accept: application/json
+
+{
+  "condition_after": "Kamera kembali dalam kondisi baik",
+  "status": "checked_out"
+}
