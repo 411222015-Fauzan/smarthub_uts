@@ -3,7 +3,7 @@
 @section('content')
 <h2>Edit Jadwal</h2>
 
-<form action="{{ route('borrowing-schedules.update', $schedule) }}" method="POST">
+<form action="{{ url('/borrowing-schedules/' . $schedule->id) }}" method="POST">
     @csrf
     @method('PUT')
 

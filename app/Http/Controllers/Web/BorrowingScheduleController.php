@@ -43,11 +43,16 @@ class BorrowingScheduleController extends Controller
         }
 
         BorrowingSchedule::create($data);
-        return redirect()->route('schedules.index')->with('success', 'Jadwal peminjaman berhasil dibuat.');
+
+        return redirect()
+            ->route('borrowing-schedules.index')
+            ->with('success', 'Jadwal peminjaman berhasil dibuat.');
     }
 
-    public function edit(BorrowingSchedule $schedule)
+    public function edit($borrowing_schedule)
     {
+        $schedule = BorrowingSchedule::findOrFail($borrowing_schedule);
+
         $members = Member::with('user')->get();
         $equipments = Equipment::all();
         $rooms = Room::all();
@@ -55,8 +60,10 @@ class BorrowingScheduleController extends Controller
         return view('schedules.edit', compact('schedule', 'members', 'equipments', 'rooms'));
     }
 
-    public function update(Request $request, BorrowingSchedule $schedule)
+    public function update(Request $request, $borrowing_schedule)
     {
+        $schedule = BorrowingSchedule::findOrFail($borrowing_schedule);
+
         $data = $request->validate([
             'member_id' => ['required', 'exists:members,id'],
             'equipment_id' => ['nullable', 'exists:equipments,id'],
@@ -68,12 +75,19 @@ class BorrowingScheduleController extends Controller
         ]);
 
         $schedule->update($data);
-        return redirect()->route('schedules.index')->with('success', 'Jadwal peminjaman berhasil diperbarui.');
+
+        return redirect()
+            ->route('borrowing-schedules.index')
+            ->with('success', 'Jadwal peminjaman berhasil diperbarui.');
     }
 
-    public function destroy(BorrowingSchedule $schedule)
+    public function destroy($borrowing_schedule)
     {
+        $schedule = BorrowingSchedule::findOrFail($borrowing_schedule);
         $schedule->delete();
-        return redirect()->route('schedules.index')->with('success', 'Jadwal peminjaman berhasil dihapus.');
+
+        return redirect()
+            ->route('borrowing-schedules.index')
+            ->with('success', 'Jadwal peminjaman berhasil dihapus.');
     }
 }
