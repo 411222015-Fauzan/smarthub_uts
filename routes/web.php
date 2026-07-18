@@ -1,26 +1,36 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\AuthController;
-use App\Http\Controllers\Web\EquipmentController;
-use App\Http\Controllers\Web\RoomController;
-use App\Http\Controllers\Web\BorrowingScheduleController;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])
-    ->name('login');
+Route::get('/login', function () {
+    return Inertia::render('Login');
+})->name('login');
 
-Route::post('/login', [AuthController::class, 'login'])
-    ->name('login.process');
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
 
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->name('logout');
+Route::get('/equipments', function () {
+    return Inertia::render('Equipments');
+})->name('equipments');
 
-Route::middleware('auth')->group(function () {
-    Route::resource('equipments', EquipmentController::class);
-    Route::resource('rooms', RoomController::class);
-    Route::resource('borrowing-schedules', BorrowingScheduleController::class);
-});
+Route::get('/rooms', function () {
+    return Inertia::render('Rooms');
+})->name('rooms');
+
+Route::get('/members', function () {
+    return Inertia::render('Members');
+})->name('members');
+
+Route::get('/schedules', function () {
+    return Inertia::render('Schedules');
+})->name('schedules');
+
+Route::get('/check-ins', function () {
+    return Inertia::render('CheckIns');
+})->name('check-ins');
